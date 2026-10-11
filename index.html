@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Propuesta visual — G&S Geociencia y Servicios Especializados</title>
+<title>Inicio — G&S Geociencia y Servicios Especializados</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Inter:wght@400;500;600&display=swap"
@@ -48,9 +48,9 @@
   header.nav .wrap{display:flex; align-items:center; justify-content:space-between; gap:20px;}
   .brand{display:flex; align-items:center; gap:9px; font-family:'Barlow Condensed'; font-weight:700; font-size:21px; color:var(--ink); white-space:nowrap;}
   .brand b{color:var(--blue);}
-  nav.links{display:flex; gap:26px; font-size:14px; color:var(--ink-soft);}
-  nav.links a{color:inherit; text-decoration:none;}
-  nav.links a:hover{color:var(--blue);}
+  nav.links{display:flex; gap:28px; font-size:14.5px; font-weight:600; color:var(--ink);}
+  nav.links a{color:inherit; text-decoration:none; padding-bottom:3px; border-bottom:2px solid transparent;}
+  nav.links a:hover{color:var(--blue); border-bottom-color:var(--blue);}
   .cta{font-size:13.5px; font-weight:600; color:#fff; background:var(--blue); padding:10px 18px; text-decoration:none; white-space:nowrap;}
   @media (max-width:760px){ nav.links{display:none;} }
 
@@ -94,8 +94,16 @@
   .svc a{font-size:13px; font-weight:600; color:var(--blue-dim); text-decoration:none; border-bottom:1.5px solid var(--blue); padding-bottom:2px;}
   @media (max-width:800px){ .svc-grid{grid-template-columns:1fr;} }
 
-  .clients{display:flex; flex-wrap:wrap; gap:10px;}
-  .clients span{border:1px solid var(--line); background:var(--stone); padding:9px 16px; font-size:13.5px; font-weight:600; color:var(--ink-soft);}
+  .clients-wrap{overflow:hidden; position:relative; border-top:1px solid var(--line); border-bottom:1px solid var(--line); padding:34px 0;}
+  .clients-wrap::before,.clients-wrap::after{content:'';position:absolute; top:0; bottom:0; width:70px; z-index:2; pointer-events:none;}
+  .clients-wrap::before{left:0; background:linear-gradient(90deg,var(--stone),transparent);}
+  .clients-wrap::after{right:0; background:linear-gradient(270deg,var(--stone),transparent);}
+  .clients-track{display:flex; width:max-content; gap:54px; animation:scrollClients 32s linear infinite;}
+  .clients-wrap:hover .clients-track{animation-play-state:paused;}
+  .client-logo{display:flex; align-items:center; gap:9px; font-family:'Barlow Condensed'; font-weight:700; font-size:22px; color:var(--ink-soft); white-space:nowrap; letter-spacing:.01em;}
+  .client-logo .dot{width:7px; height:7px; border-radius:50%; background:var(--blue); flex:0 0 auto;}
+  @keyframes scrollClients{ from{transform:translateX(0);} to{transform:translateX(-50%);} }
+  @media (prefers-reduced-motion: reduce){ .clients-track{animation:none;} }
 
   .proj{display:grid; grid-template-columns:repeat(2,1fr); gap:26px;}
   .proj article{border:1px solid var(--line);}
@@ -124,28 +132,81 @@
 
   .note{position:fixed; left:14px; bottom:calc(14px + env(safe-area-inset-bottom,0px)); z-index:30;
     background:var(--graphite); color:var(--stone); font-size:11.5px; padding:9px 13px; max-width:270px; opacity:.94;}
+
+  /* página interior */
+  .pagehead{position:relative; overflow:hidden; border-bottom:1px solid var(--line); padding:54px 0 46px;}
+  .pagehead .wrap{position:relative;}
+  .pagehead h1{font-size:clamp(34px,5vw,52px); color:var(--ink); max-width:18ch;}
+  .pagehead .lede{max-width:52ch; font-size:16px; color:var(--ink-soft); margin:16px 0 0;}
+  .crumb{font-size:12.5px; color:var(--ink-soft); margin-bottom:14px;}
+  .crumb a{color:var(--ink-soft); text-decoration:none;} .crumb a:hover{color:var(--blue);}
+
+  .vv-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--line); border:1px solid var(--line); margin-top:20px;}
+  .vv-grid .cell2{background:var(--stone); padding:22px;}
+  .vv-grid .cell2 b{display:block; font-family:'Barlow Condensed'; font-size:12px; letter-spacing:.05em; color:var(--blue-dim); margin-bottom:8px;}
+  .vv-grid .cell2 span{font-size:13px; color:var(--ink-soft);}
+  @media (max-width:760px){ .vv-grid{grid-template-columns:1fr;} }
+
+  .chips{display:flex; flex-wrap:wrap; gap:8px; margin-top:16px;}
+  .chips span{border:1px solid var(--line); background:var(--stone); padding:7px 13px; font-size:12.5px; color:var(--ink-soft);}
+
+  .team-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:22px; margin-top:24px;}
+  .team-card{border:1px solid var(--line); background:var(--stone);}
+  .team-card .ph{aspect-ratio:4/3; background:repeating-linear-gradient(135deg,var(--card),var(--card) 9px,var(--line) 9px,var(--line) 18px);
+    display:flex; align-items:center; justify-content:center; font-size:12px; color:var(--ink-soft);}
+  .team-card .tbody{padding:16px 18px;}
+  .team-card h3{font-family:'Inter'; font-weight:600; font-size:16px; color:var(--ink);}
+  .team-card .role{font-size:12.5px; color:var(--blue-dim); font-weight:600; margin-top:3px;}
+  @media (max-width:620px){ .team-grid{grid-template-columns:1fr;} }
+
+  .svc-detail{border:1px solid var(--line); background:var(--stone); margin-bottom:1px;}
+  .svc-detail-head{display:flex; gap:18px; align-items:baseline; padding:26px 28px 14px;}
+  .svc-detail-head .idx{font-family:'Barlow Condensed'; font-size:30px; font-weight:700; color:var(--blue); line-height:1;}
+  .svc-detail-head h3{font-size:24px; color:var(--ink);}
+  .svc-detail .body{padding:0 28px 26px; display:grid; grid-template-columns:1fr 1fr; gap:24px;}
+  .svc-detail .body p{font-size:13.5px; color:var(--ink-soft); margin:0 0 10px; max-width:42ch;}
+  .svc-detail .label{font-size:11px; letter-spacing:.05em; text-transform:uppercase; color:var(--blue-dim); font-weight:600; margin-bottom:8px;}
+  @media (max-width:700px){ .svc-detail .body{grid-template-columns:1fr;} }
+
+  /* contacto */
+  .contact-grid{display:grid; grid-template-columns:1.2fr 1fr; gap:48px; align-items:start;}
+  .form{border:1px solid var(--line); background:var(--stone); padding:30px;}
+  .field{margin-bottom:16px;}
+  .field label{display:block; font-size:12px; font-weight:600; color:var(--ink-soft); margin-bottom:6px;}
+  .field .input{border:1px solid var(--line); background:var(--card); height:42px; display:flex; align-items:center; padding:0 12px; font-size:13px; color:var(--ink-soft);}
+  .field .input.area{height:90px; align-items:flex-start; padding-top:10px;}
+  .contact-info{border:1px solid var(--line); background:var(--card); padding:26px;}
+  .contact-info .row2{display:flex; gap:12px; padding:12px 0; border-bottom:1px solid var(--line);}
+  .contact-info .row2:last-of-type{border-bottom:none;}
+  .contact-info .row2 b{font-size:12px; color:var(--ink-soft); display:block; margin-bottom:2px; font-weight:600;}
+  .contact-info .row2 span{font-size:14.5px; color:var(--ink);}
+  .map-ph{aspect-ratio:16/9; margin-top:18px; background:repeating-linear-gradient(135deg,var(--card),var(--card) 9px,var(--line) 9px,var(--line) 18px);
+    border:1px solid var(--line); display:flex; align-items:center; justify-content:center; font-size:12px; color:var(--ink-soft);}
+  @media (max-width:800px){ .contact-grid{grid-template-columns:1fr;} }
 </style>
 </head>
 <body>
+
+
 
 <div class="note">Propuesta visual con marca real de G&amp;S. Proyectos y fotografías siguen siendo de muestra hasta recibir el detalle y la autorización del cliente.</div>
 
 <header class="nav">
   <div class="wrap">
-    <div class="brand">
+    <a class="brand" href="index.html" style="text-decoration:none;">
       <svg width="30" height="22" viewBox="0 0 26 20" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M1 18 L8 6 L12 12 L15 8 L19 14" stroke="var(--blue)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
         <path d="M15 18 L19 11 L24 18" stroke="var(--blue)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
       </svg>
       G&amp;<b>S</b>
-    </div>
+    </a>
     <nav class="links">
-      <a href="#nosotros">Nosotros</a>
-      <a href="#servicios">Consultorías</a>
-      <a href="#proyectos">Experiencia</a>
-      <a href="#equipo">Equipo</a>
+      <a href="nosotros.html">Nosotros</a>
+      <a href="servicios.html">Consultorías</a>
+      <a href="index.html#proyectos">Experiencia</a>
+      <a href="contacto.html">Contacto</a>
     </nav>
-    <a class="cta" href="#contacto">Solicitar una reunión</a>
+    <a class="cta" href="contacto.html">Solicitar una reunión</a>
   </div>
 </header>
 
@@ -161,8 +222,8 @@
     <h1>Transformamos datos de campo en decisiones sólidas.</h1>
     <p class="lede">Estudios geocientíficos de estricto rigor, con validación cruzada de datos, para minimizar el riesgo geológico de operaciones mineras complejas.</p>
     <div class="hero-ctas">
-      <a class="btn-primary" href="#contacto">Solicitar una reunión técnica</a>
-      <a class="btn-ghost" href="#servicios">Ver consultorías</a>
+      <a class="btn-primary" href="contacto.html">Solicitar una reunión técnica</a>
+      <a class="btn-ghost" href="servicios.html">Ver consultorías</a>
     </div>
   </div>
 </section>
@@ -197,27 +258,33 @@
       <div class="tag">Tres líneas de trabajo, de campo a modelo entregable.</div>
     </div>
     <div class="svc-grid">
-      <div class="svc"><div class="idx">01</div><h3>Geología Estructural y Modelamiento 3D</h3><p>Deformación dúctil y frágil, dominios, paleoesfuerzos y targets de exploración. Modelos 2D y 3D en Leapfrog Geo / Vulcan.</p><a href="#">Ver detalle</a></div>
-      <div class="svc"><div class="idx">02</div><h3>Magmatismo, Volcanología y Petrología</h3><p>Suites magmáticas y centros volcánicos. Litogeoquímica, dataciones e isótopos.</p><a href="#">Ver detalle</a></div>
-      <div class="svc"><div class="idx">03</div><h3>Estratigrafía, Cuencas y Geotecnia</h3><p>Correlaciones y niveles guía. Integración con parámetros geomecánicos (RQD, Televiewer) y circones detríticos.</p><a href="#">Ver detalle</a></div>
+      <div class="svc"><div class="idx">01</div><h3>Geología Estructural y Modelamiento 3D</h3><p>Deformación dúctil y frágil, dominios, paleoesfuerzos y targets de exploración. Modelos 2D y 3D en Leapfrog Geo / Vulcan.</p><a href="servicios.html">Ver detalle</a></div>
+      <div class="svc"><div class="idx">02</div><h3>Magmatismo, Volcanología y Petrología</h3><p>Suites magmáticas y centros volcánicos. Litogeoquímica, dataciones e isótopos.</p><a href="servicios.html">Ver detalle</a></div>
+      <div class="svc"><div class="idx">03</div><h3>Estratigrafía, Cuencas y Geotecnia</h3><p>Correlaciones y niveles guía. Integración con parámetros geomecánicos (RQD, Televiewer) y circones detríticos.</p><a href="servicios.html">Ver detalle</a></div>
     </div>
   </div>
 </section>
 
-<section id="experiencia-clientes">
-  <div class="wrap">
-    <div class="section-head">
-      <h2>Respaldo</h2>
-      <div class="tag">Confirmar con el cliente qué nombres siguen autorizados para esta web.</div>
-    </div>
-    <div class="clients">
-      <span>Rio Tinto</span><span>BHP</span><span>Antamina</span><span>BISA</span><span>Apumayo</span>
-      <span>Amphos21</span><span>Shougang Hierro Perú</span><span>Anglo American Quellaveco</span>
-      <span>Fresnillo</span><span>ExploAndes</span><span>Lowell Mineral Exploration</span>
-      <span>Bear Creek Mining</span><span>Anddes</span><span>Flo Solutions</span>
-    </div>
+<section id="experiencia-clientes" style="padding:60px 0 56px;">
+  <div class="wrap" style="margin-bottom:28px;">
+    <div class="eyebrow"><span class="rule"></span>Clientes</div>
+    <h2 style="font-size:28px;">Empresas que confían en G&amp;S</h2>
+    <p style="font-size:13px; color:var(--ink-soft); margin:8px 0 0; max-width:50ch;">Logotipos de muestra (texto) — reemplazar por los archivos de marca reales y confirmar con el cliente cuáles siguen autorizados para esta web.</p>
+  </div>
+  <div class="clients-wrap">
+    <div class="clients-track" id="clientsTrack"></div>
   </div>
 </section>
+<script>
+(function(){
+  const names = ['Rio Tinto','BHP','Antamina','BISA','Apumayo','Amphos21','Shougang Hierro Perú',
+    'Anglo American Quellaveco','Fresnillo','ExploAndes','Lowell Mineral Exploration',
+    'Bear Creek Mining','Anddes','Flo Solutions'];
+  const track = document.getElementById('clientsTrack');
+  const renderSet = () => names.map(n => `<div class="client-logo"><span class="dot"></span>${n}</div>`).join('');
+  track.innerHTML = renderSet() + renderSet();
+})();
+</script>
 
 <section id="proyectos" style="background:var(--card); border-top:1px solid var(--line); border-bottom:1px solid var(--line);">
   <div class="wrap">
@@ -242,11 +309,11 @@
   <div class="wrap" style="padding:56px 28px; flex-direction:column; align-items:flex-start;">
     <h2>¿Evaluamos juntos su proyecto?</h2>
     <p>Solicite una reunión técnica preliminar para evaluar la viabilidad o actualizar el modelo estructural 3D de su proyecto.</p>
-    <a class="btn-light" href="#contacto" style="margin-top:22px;">Solicitar una reunión</a>
+    <a class="btn-light" href="contacto.html" style="margin-top:22px;">Solicitar una reunión</a>
   </div>
 </section>
 
-<footer id="contacto">
+<footer>
   <div class="wrap">
     <div>
       <div class="brand" style="margin-bottom:12px;">
@@ -260,7 +327,7 @@
     </div>
     <div>
       <h4>Navegación</h4>
-      <a href="#nosotros">Nosotros</a><a href="#servicios">Consultorías</a><a href="#proyectos">Experiencia</a><a href="#equipo">Equipo</a>
+      <a href="#nosotros">Nosotros</a><a href="servicios.html">Consultorías</a><a href="#proyectos">Experiencia</a><a href="#equipo">Equipo</a>
     </div>
     <div>
       <h4>Contacto</h4>
@@ -274,6 +341,7 @@
     <span>Política de privacidad</span>
   </div>
 </footer>
+
 
 </body>
 </html>
