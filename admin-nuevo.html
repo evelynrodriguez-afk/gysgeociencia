@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Añadir nueva entrada (maqueta) — G&S</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Inter:wght@400;500;600&display=swap"
+      media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Inter:wght@400;500;600&display=swap"></noscript>
+<style>
+  :root{
+    --stone:#F3F5F9; --panel:#ffffff; --graphite:#0E1B2E; --ink:#15233A; --ink-soft:#5B6779;
+    --blue:#2F5FEB; --blue-dim:#1E46C4; --line:#D7DCE6; --card:#EEF1F6;
+    --free:#1E7A3C; --free-bg:#E4F3E8; --paid:#9A5B10; --paid-bg:#FCEFD9;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --stone:#0E1016; --panel:#171A21; --graphite:#F3F5F9; --ink:#E7EBF3; --ink-soft:#9AA3B5;
+      --blue:#5B86F5; --blue-dim:#2F5FEB; --line:#2A2E3A; --card:#1D2129;
+      --free:#6FD394; --free-bg:#113321; --paid:#F0B35B; --paid-bg:#3A2A0F;
+    }
+  }
+  :root[data-theme="dark"]{
+    --stone:#0E1016; --panel:#171A21; --graphite:#F3F5F9; --ink:#E7EBF3; --ink-soft:#9AA3B5;
+    --blue:#5B86F5; --blue-dim:#2F5FEB; --line:#2A2E3A; --card:#1D2129;
+    --free:#6FD394; --free-bg:#113321; --paid:#F0B35B; --paid-bg:#3A2A0F;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0; background:var(--stone); color:var(--ink); font-family:'Inter',system-ui,-apple-system,Arial,sans-serif;
+    font-size:14px; padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);}
+  h1,h2{font-family:'Barlow Condensed',Arial,sans-serif; font-weight:700; margin:0;}
+
+  .note-bar{background:var(--graphite); color:#D7DCE6; font-size:12px; line-height:1.4; padding:9px 16px;
+    text-align:center; display:flex; align-items:center; justify-content:center; gap:12px;}
+  .note-bar button{background:none; border:1px solid #3A4458; color:#D7DCE6; width:22px; height:22px; border-radius:50%; cursor:pointer; font-size:13px;}
+
+  .topbar{height:52px; background:var(--graphite); color:#fff; display:flex; align-items:center; justify-content:space-between; padding:0 16px; gap:14px;}
+  .topbar .left{display:flex; align-items:center; gap:10px; font-weight:700; font-size:14px;}
+  .topbar .left b{color:#7FA0FF;}
+  .topbar .right{display:flex; align-items:center; gap:14px; font-size:12.5px; color:#C7CEDD;}
+  .avatar{width:26px; height:26px; border-radius:50%; background:var(--blue); color:#fff; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700;}
+
+  .main{max-width:1180px; margin:0 auto; padding:22px 20px 60px;}
+  .back{font-size:12.5px; color:var(--ink-soft); text-decoration:none; display:inline-block; margin-bottom:12px;}
+  .back:hover{color:var(--blue);}
+
+  .layout{display:grid; grid-template-columns:1fr 300px; gap:22px; align-items:start;}
+  @media (max-width:880px){ .layout{grid-template-columns:1fr;} }
+
+  .title-input{width:100%; font-family:'Barlow Condensed'; font-size:30px; font-weight:700; color:var(--ink);
+    border:1px solid var(--line); background:var(--panel); padding:14px 16px; margin-bottom:14px;}
+  .title-input::placeholder{color:#A9B2C0;}
+
+  .toolbar{display:flex; gap:4px; flex-wrap:wrap; border:1px solid var(--line); border-bottom:none; background:var(--card); padding:8px 10px;}
+  .toolbar span{width:28px; height:28px; display:flex; align-items:center; justify-content:center; font-size:13px; color:var(--ink-soft); background:var(--panel); border:1px solid var(--line);}
+  .editor-body{border:1px solid var(--line); background:var(--panel); min-height:320px; padding:22px; font-size:14.5px; color:var(--ink-soft); line-height:1.7;}
+  .editor-body .ph-line{height:11px; background:var(--card); border-radius:2px; margin-bottom:12px;}
+
+  .box{border:1px solid var(--line); background:var(--panel); margin-bottom:18px;}
+  .box .box-head{font-size:12.5px; font-weight:700; text-transform:uppercase; letter-spacing:.03em; color:var(--ink-soft);
+    padding:11px 15px; border-bottom:1px solid var(--line); background:var(--card);}
+  .box .box-body{padding:15px;}
+
+  .pub-row{display:flex; justify-content:space-between; font-size:13px; padding:7px 0; border-bottom:1px dashed var(--line);}
+  .pub-row:last-of-type{border-bottom:none;}
+  .pub-row .v{color:var(--ink-soft);}
+  .pub-actions{display:flex; justify-content:space-between; align-items:center; margin-top:12px;}
+  .btn{font-size:12.5px; font-weight:600; padding:8px 14px; border:1px solid var(--line); background:var(--panel); color:var(--ink); cursor:pointer;}
+  .btn.primary{background:var(--blue); color:#fff; border-color:var(--blue);}
+
+  .access-opt{display:flex; align-items:flex-start; gap:9px; padding:10px 0; cursor:pointer;}
+  .access-opt input{margin-top:3px;}
+  .access-opt .lbl{font-size:13.5px; font-weight:600; color:var(--ink);}
+  .access-opt .ds{font-size:12px; color:var(--ink-soft); margin-top:1px;}
+  .access-badge-prev{font-size:10.5px; font-weight:700; letter-spacing:.03em; padding:3px 8px; text-transform:uppercase; display:inline-block; margin-left:6px;}
+  .access-badge-prev.free{background:var(--free-bg); color:var(--free);}
+  .access-badge-prev.paid{background:var(--paid-bg); color:var(--paid);}
+  .price-field{display:none; margin-top:10px; padding-top:10px; border-top:1px solid var(--line);}
+  .price-field.show{display:block;}
+  .price-field label{font-size:12px; color:var(--ink-soft); display:block; margin-bottom:5px;}
+  .price-field .input{border:1px solid var(--line); background:var(--panel); height:34px; display:flex; align-items:center; padding:0 10px; font-size:13px; color:var(--ink); max-width:140px;}
+  .price-field input.price-real{border:1px solid var(--line); background:var(--panel); height:34px; padding:0 10px; font-size:13.5px; color:var(--ink); max-width:140px; font-family:inherit;}
+  .price-field input.price-real::placeholder{color:#A9B2C0;}
+  .price-field .ex{font-size:11.5px; color:var(--ink-soft); margin-top:6px;}
+
+  .cat-opt{display:flex; align-items:center; gap:8px; font-size:13px; padding:5px 0; color:var(--ink);}
+
+  .feat-img{aspect-ratio:16/10; background:repeating-linear-gradient(135deg,var(--card),var(--card) 9px,var(--line) 9px,var(--line) 18px);
+    border:1px solid var(--line); display:flex; align-items:center; justify-content:center; font-size:11.5px; color:var(--ink-soft); margin-bottom:10px;}
+  .link-like{font-size:12.5px; color:var(--blue-dim); cursor:pointer;}
+
+  textarea.excerpt{width:100%; border:1px solid var(--line); background:var(--card); min-height:70px; padding:10px; font-size:13px; color:var(--ink-soft); font-family:inherit;}
+</style>
+</head>
+<body>
+
+<div class="note-bar" id="noteBar">
+  <span>Maqueta ilustrativa de la pantalla "Añadir nueva entrada" — no es funcional. Prueba el selector "Acceso" para ver cómo cambia entre gratuito y de pago.</span>
+  <button onclick="document.getElementById('noteBar').style.display='none'" aria-label="Cerrar aviso">×</button>
+</div>
+
+<div class="topbar">
+  <div class="left">⛰️ G&amp;<b>S</b> · Panel de administración</div>
+  <div class="right">
+    <span>👁 Ver sitio</span>
+    <div class="avatar">ML</div>
+    <span>María Loza García</span>
+  </div>
+</div>
+
+<div class="main">
+  <a class="back" href="admin.html">← Volver a Entradas</a>
+  <div class="layout">
+    <div>
+      <input class="title-input" type="text" placeholder="Añadir título" value="Buenas prácticas para modelos estructurales en Leapfrog">
+      <div class="toolbar">
+        <span>B</span><span><i>I</i></span><span>🔗</span><span>🖼</span><span>H1</span><span>❝</span><span>•</span><span>1.</span>
+      </div>
+      <div class="editor-body">
+        <div class="ph-line" style="width:95%;"></div>
+        <div class="ph-line" style="width:88%;"></div>
+        <div class="ph-line" style="width:92%;"></div>
+        <div class="ph-line" style="width:60%; margin-bottom:22px;"></div>
+        <div class="ph-line" style="width:90%;"></div>
+        <div class="ph-line" style="width:80%;"></div>
+        <span style="font-size:12.5px; color:#A9B2C0;">Cuerpo del artículo — editor de bloques (texto, imágenes, citas, tablas)</span>
+      </div>
+    </div>
+
+    <div>
+      <div class="box">
+        <div class="box-head">Publicar</div>
+        <div class="box-body">
+          <div class="pub-row"><span>Estado</span><span class="v">Borrador</span></div>
+          <div class="pub-row"><span>Visibilidad</span><span class="v">Público</span></div>
+          <div class="pub-row"><span>Publicar</span><span class="v">Inmediatamente</span></div>
+          <div class="pub-actions">
+            <button class="btn">Guardar borrador</button>
+            <button class="btn primary">Publicar</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="box">
+        <div class="box-head">Acceso al contenido</div>
+        <div class="box-body" id="accessBox">
+          <label class="access-opt">
+            <input type="radio" name="access" value="free" checked>
+            <span>
+              <span class="lbl">Gratuito<span class="access-badge-prev free">Gratis</span></span>
+              <span class="ds" style="display:block;">Visible para cualquier visitante del sitio.</span>
+            </span>
+          </label>
+          <label class="access-opt">
+            <input type="radio" name="access" value="paid">
+            <span>
+              <span class="lbl">De pago<span class="access-badge-prev paid">De pago</span></span>
+              <span class="ds" style="display:block;">Solo el primer párrafo es visible; el resto queda tras el muro de pago.</span>
+            </span>
+          </label>
+          <div class="price-field" id="priceField">
+            <label>Precio del artículo individual (S/)</label>
+            <input class="price-real" id="priceInput" type="number" min="0" step="0.50" placeholder="Ej. 15.00">
+            <div class="ex" id="pricePreview">Así se verá en el muro de pago: <b>“Desde S/ —”</b></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="box">
+        <div class="box-head">Categoría</div>
+        <div class="box-body">
+          <label class="cat-opt"><input type="checkbox" checked> Modelamiento 3D</label>
+          <label class="cat-opt"><input type="checkbox"> Exploración</label>
+          <label class="cat-opt"><input type="checkbox"> Geotecnia</label>
+          <label class="cat-opt"><input type="checkbox"> Petrología</label>
+          <label class="cat-opt"><input type="checkbox"> QA/QC</label>
+          <label class="cat-opt"><input type="checkbox"> Normativa</label>
+        </div>
+      </div>
+
+      <div class="box">
+        <div class="box-head">Imagen destacada</div>
+        <div class="box-body">
+          <div class="feat-img">Sin imagen [PENDIENTE]</div>
+          <span class="link-like">Añadir imagen destacada</span>
+        </div>
+      </div>
+
+      <div class="box">
+        <div class="box-head">Extracto</div>
+        <div class="box-body">
+          <textarea class="excerpt" placeholder="Resumen breve que aparece en la portada del blog...">Cinco criterios para que un modelo 3D sea auditable y replicable por todo el equipo técnico.</textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var radios = document.querySelectorAll('input[name="access"]');
+  var priceField = document.getElementById('priceField');
+  function update(){
+    var paid = document.querySelector('input[name="access"]:checked').value === 'paid';
+    priceField.classList.toggle('show', paid);
+  }
+  radios.forEach(function(r){ r.addEventListener('change', update); });
+  update();
+
+  var priceInput = document.getElementById('priceInput');
+  var preview = document.getElementById('pricePreview');
+  priceInput.addEventListener('input', function(){
+    var v = priceInput.value;
+    preview.innerHTML = 'Así se verá en el muro de pago: <b>“Desde S/ ' + (v ? v : '—') + '”</b>';
+  });
+})();
+</script>
+</body>
+</html>

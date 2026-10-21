@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Iniciar sesión (maqueta) — G&S</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Inter:wght@400;500;600&display=swap"
+      media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Inter:wght@400;500;600&display=swap"></noscript>
+<style>
+  :root{
+    --stone:#F3F5F9; --panel:#ffffff; --graphite:#0E1B2E; --ink:#15233A; --ink-soft:#5B6779;
+    --blue:#2F5FEB; --blue-dim:#1E46C4; --line:#D7DCE6; --card:#EEF1F6;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --stone:#0E1016; --panel:#171A21; --graphite:#F3F5F9; --ink:#E7EBF3; --ink-soft:#9AA3B5; --line:#2A2E3A; --card:#1D2129;
+      --blue:#5B86F5; --blue-dim:#2F5FEB;
+    }
+  }
+  :root[data-theme="dark"]{
+    --stone:#0E1016; --panel:#171A21; --graphite:#F3F5F9; --ink:#E7EBF3; --ink-soft:#9AA3B5; --line:#2A2E3A; --card:#1D2129;
+    --blue:#5B86F5; --blue-dim:#2F5FEB;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0; min-height:100vh; background:var(--stone); color:var(--ink); font-family:'Inter',system-ui,-apple-system,Arial,sans-serif;
+    display:flex; flex-direction:column; align-items:center; justify-content:center; padding:24px;
+    padding-top:calc(24px + env(safe-area-inset-top,0px)); padding-bottom:calc(24px + env(safe-area-inset-bottom,0px));}
+  h1{font-family:'Barlow Condensed',Arial,sans-serif; font-weight:700; margin:0;}
+
+  .note-bar{position:fixed; top:0; left:0; right:0; background:var(--graphite); color:#D7DCE6; font-size:12px; line-height:1.4;
+    padding:9px 16px; text-align:center; display:flex; align-items:center; justify-content:center; gap:12px; z-index:5;}
+  .note-bar button{background:none; border:1px solid #3A4458; color:#D7DCE6; width:22px; height:22px; border-radius:50%; cursor:pointer; font-size:13px;}
+
+  .brand{display:flex; align-items:center; gap:9px; font-family:'Barlow Condensed'; font-weight:700; font-size:24px; color:var(--ink); margin-bottom:26px;}
+  .brand b{color:var(--blue);}
+
+  .card{width:100%; max-width:380px; background:var(--panel); border:1px solid var(--line); padding:32px 30px;}
+  .card h1{font-size:21px; margin-bottom:6px;}
+  .card .sub{font-size:13px; color:var(--ink-soft); margin-bottom:24px;}
+
+  .field{margin-bottom:16px;}
+  .field label{display:block; font-size:12.5px; font-weight:600; color:var(--ink-soft); margin-bottom:6px;}
+  .field input{width:100%; border:1px solid var(--line); background:var(--card); height:42px; padding:0 12px;
+    font-size:14px; color:var(--ink); font-family:inherit;}
+  .field input::placeholder{color:#A9B2C0;}
+
+  .row-between{display:flex; justify-content:space-between; align-items:center; font-size:12.5px; margin:4px 0 22px;}
+  .row-between label{display:flex; align-items:center; gap:6px; color:var(--ink-soft);}
+  .row-between a{color:var(--blue-dim); text-decoration:none;}
+
+  .btn-primary{width:100%; background:var(--blue); color:#fff; border:none; padding:12px; font-size:14px; font-weight:600; cursor:pointer;}
+
+  .tfa{display:none; margin-top:18px; padding-top:18px; border-top:1px dashed var(--line);}
+  .tfa.show{display:block;}
+  .tfa p{font-size:12.5px; color:var(--ink-soft); margin:0 0 10px;}
+  .tfa .code{display:flex; gap:8px;}
+  .tfa .code input{width:42px; height:48px; text-align:center; font-size:18px; border:1px solid var(--line); background:var(--card); color:var(--ink); font-family:inherit;}
+
+  .back{font-size:12px; color:var(--ink-soft); text-decoration:none; margin-top:18px; display:inline-block;}
+  .back:hover{color:var(--blue);}
+</style>
+</head>
+<body>
+
+<div class="note-bar" id="noteBar">
+  <span>Maqueta ilustrativa de la pantalla de inicio de sesión — no es funcional. Haz clic en "Iniciar sesión" para ver el paso de verificación en dos pasos.</span>
+  <button onclick="document.getElementById('noteBar').style.display='none'" aria-label="Cerrar aviso">×</button>
+</div>
+
+<div class="brand">
+  <svg width="30" height="22" viewBox="0 0 26 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M1 18 L8 6 L12 12 L15 8 L19 14" stroke="var(--blue)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+    <path d="M15 18 L19 11 L24 18" stroke="var(--blue)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  </svg>
+  G&amp;<b>S</b>
+</div>
+
+<div class="card">
+  <h1 id="cardTitle">Panel de administración</h1>
+  <p class="sub" id="cardSub">Ingresa con tu cuenta para administrar el contenido del sitio.</p>
+
+  <div id="step1">
+    <div class="field"><label>Usuario o correo</label><input type="text" placeholder="maria.loza@gys.pe"></div>
+    <div class="field"><label>Contraseña</label><input type="password" placeholder="••••••••••"></div>
+    <div class="row-between">
+      <label><input type="checkbox"> Recordarme</label>
+      <a href="#">¿Olvidaste tu contraseña?</a>
+    </div>
+    <button class="btn-primary" id="goStep2">Iniciar sesión</button>
+  </div>
+
+  <div id="step2" class="tfa">
+    <p>Ingresa el código de 6 dígitos de tu app de autenticación.</p>
+    <div class="code">
+      <input maxlength="1" inputmode="numeric"><input maxlength="1" inputmode="numeric"><input maxlength="1" inputmode="numeric">
+      <input maxlength="1" inputmode="numeric"><input maxlength="1" inputmode="numeric"><input maxlength="1" inputmode="numeric">
+    </div>
+    <button class="btn-primary" style="margin-top:18px;" onclick="location.href='admin.html'">Verificar y entrar</button>
+  </div>
+</div>
+
+<a class="back" href="index.html">← Volver al sitio</a>
+
+<script>
+(function(){
+  var btn = document.getElementById('goStep2');
+  btn.addEventListener('click', function(){
+    document.getElementById('step1').style.display = 'none';
+    document.getElementById('step2').classList.add('show');
+    document.getElementById('cardTitle').textContent = 'Verificación en dos pasos';
+    document.getElementById('cardSub').textContent = 'Un paso más para proteger tu cuenta.';
+  });
+})();
+</script>
+</body>
+</html>
