@@ -1,0 +1,45 @@
+{
+  "pageTitle": "Nosotros",
+  "eyebrow": "Consultora geocientífica",
+  "heading": "Quiénes somos",
+  "lede": "Consultora peruana de referencia en estudios geocientíficos de estricto rigor para la minería, la geotecnia y la exploración petrolera.",
+  "aboutText": "Diseñamos sistemas integrados y bases de datos a medida para optimizar campañas de exploración y evaluación de depósitos. Trabajamos junto al equipo del cliente, transfiriendo metodología y dejando capacidad instalada en campo.",
+  "mission": "Brindar información geológica objetiva y de máxima precisión técnica, con validación cruzada de datos, para minimizar el riesgo geológico de nuestros clientes.",
+  "missionShort": "Información geológica objetiva, validada y de máxima precisión técnica.",
+  "vision": "[PENDIENTE — a definir con el cliente]",
+  "values": "[PENDIENTE — a definir con el cliente]",
+  "photoPlaceholder": "Fotografía institucional [PENDIENTE]",
+  "fieldTitle": "Campo y levantamiento",
+  "fieldTag": "Trabajo directo en terreno, con controles de calidad en cada etapa.",
+  "fieldItems": [
+    "Cartografía geológica multiescala, regional y de detalle",
+    "Muestreo de roca y mineral con controles QA/QC",
+    "Delimitación de unidades litológicas y alteraciones",
+    "Levantamiento estructural y Televiewer"
+  ],
+  "chips": [
+    "Modelos 3D en Leapfrog",
+    "Base de datos auditada",
+    "Mapas de targets",
+    "Informe técnico NI 43-101 / JORC ready"
+  ],
+  "directionTitle": "Dirección",
+  "directionTag": "Equipo completo pendiente de fotografías y reseñas (Formulario F-05).",
+  "team": [
+    {
+      "name": "Ing. María Loza García",
+      "role": "Gerencia General",
+      "photoPlaceholder": "Foto [PENDIENTE]"
+    },
+    {
+      "name": "Dr. Rildo Rodríguez Mejía",
+      "role": "Dirección Técnica",
+      "photoPlaceholder": "Foto [PENDIENTE]"
+    }
+  ],
+  "ctaTitle": "¿Evaluamos juntos su proyecto?",
+  "ctaText": "Solicite una reunión técnica preliminar para evaluar la viabilidad o actualizar el modelo estructural 3D de su proyecto.",
+  "ctaButton": "Solicitar una reunión",
+  "seoTitle": "Nosotros — G&S Geociencia y Servicios Especializados",
+  "seoDescription": "Consultora geocientífica peruana: modelamiento 3D, geología estructural y geotecnia para minería."
+}
