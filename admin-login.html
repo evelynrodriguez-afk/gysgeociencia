@@ -34,7 +34,8 @@
     padding:9px 16px; text-align:center; display:flex; align-items:center; justify-content:center; gap:12px; z-index:5;}
   .note-bar button{background:none; border:1px solid #3A4458; color:#D7DCE6; width:22px; height:22px; border-radius:50%; cursor:pointer; font-size:13px;}
 
-  .brand{display:flex; align-items:center; gap:9px; font-family:'Barlow Condensed'; font-weight:700; font-size:24px; color:var(--ink); margin-bottom:26px;}
+  .brand{display:flex; align-items:center; gap:11px; font-family:'Barlow Condensed'; font-weight:700; font-size:31px; color:var(--ink); margin-bottom:28px;}
+  .brand .brand-txt{display:inline-block;}
   .brand b{color:var(--blue);}
 
   .card{width:100%; max-width:380px; background:var(--panel); border:1px solid var(--line); padding:32px 30px;}
@@ -71,11 +72,11 @@
 </div>
 
 <div class="brand">
-  <svg width="30" height="22" viewBox="0 0 26 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <svg width="42" height="32" viewBox="0 0 26 20" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M1 18 L8 6 L12 12 L15 8 L19 14" stroke="var(--blue)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
     <path d="M15 18 L19 11 L24 18" stroke="var(--blue)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
   </svg>
-  G&amp;<b>S</b>
+  <span class="brand-txt">G&amp;<b>S</b></span>
 </div>
 
 <div class="card">
@@ -98,7 +99,7 @@
       <input maxlength="1" inputmode="numeric"><input maxlength="1" inputmode="numeric"><input maxlength="1" inputmode="numeric">
       <input maxlength="1" inputmode="numeric"><input maxlength="1" inputmode="numeric"><input maxlength="1" inputmode="numeric">
     </div>
-    <button class="btn-primary" style="margin-top:18px;" onclick="location.href='admin.html'">Verificar y entrar</button>
+    <button class="btn-primary" style="margin-top:18px;" onclick="location.href='admin-escritorio.html'">Verificar y entrar</button>
   </div>
 </div>
 

@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Comentarios (maqueta) — G&amp;S</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Inter:wght@400;500;600&display=swap"
+      media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Inter:wght@400;500;600&display=swap"></noscript>
+<style>
+  :root{
+    --stone:#F3F5F9; --panel:#ffffff; --graphite:#0E1B2E; --ink:#15233A; --ink-soft:#5B6779;
+    --blue:#2F5FEB; --blue-dim:#1E46C4; --line:#D7DCE6; --card:#EEF1F6;
+    --free:#1E7A3C; --free-bg:#E4F3E8; --paid:#9A5B10; --paid-bg:#FCEFD9; --info-bg:#E4ECFC;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --stone:#0E1016; --panel:#171A21; --graphite:#F3F5F9; --ink:#E7EBF3; --ink-soft:#9AA3B5;
+      --blue:#5B86F5; --blue-dim:#2F5FEB; --line:#2A2E3A; --card:#1D2129;
+      --free:#6FD394; --free-bg:#113321; --paid:#F0B35B; --paid-bg:#3A2A0F; --info-bg:#1C2A4A;
+    }
+  }
+  :root[data-theme="dark"]{
+    --stone:#0E1016; --panel:#171A21; --graphite:#F3F5F9; --ink:#E7EBF3; --ink-soft:#9AA3B5;
+    --blue:#5B86F5; --blue-dim:#2F5FEB; --line:#2A2E3A; --card:#1D2129;
+    --free:#6FD394; --free-bg:#113321; --paid:#F0B35B; --paid-bg:#3A2A0F; --info-bg:#1C2A4A;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0; background:var(--stone); color:var(--ink); font-family:'Inter',system-ui,-apple-system,Arial,sans-serif;
+    font-size:14px; padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);}
+  h1,h2{font-family:'Barlow Condensed',Arial,sans-serif; font-weight:700; margin:0;}
+  a{color:inherit;}
+
+  .note-bar{background:#0E1B2E; color:#D7DCE6; font-size:12px; line-height:1.4; padding:9px 16px;
+    text-align:center; display:flex; align-items:center; justify-content:center; gap:12px;}
+  .note-bar button{background:none; border:1px solid #3A4458; color:#D7DCE6; width:22px; height:22px; border-radius:50%; cursor:pointer; font-size:13px; flex:0 0 auto;}
+
+  .topbar{height:58px; background:#0E1B2E; color:#fff; display:flex; align-items:center; justify-content:space-between;
+    padding:0 18px; gap:14px; position:relative; overflow:hidden;}
+  .topbar::before{content:''; position:absolute; top:-80px; left:40px; width:280px; height:280px;
+    background:radial-gradient(circle, rgba(127,160,255,.35), transparent 65%); filter:blur(40px); pointer-events:none;}
+  .topbar .left{position:relative; z-index:1; display:flex; align-items:center; gap:11px; font-weight:700; font-size:17px;
+    font-family:'Barlow Condensed',Arial,sans-serif; letter-spacing:.01em;}
+  .topbar .left .sub{font-family:'Inter',system-ui,sans-serif; font-weight:500; font-size:12.5px; color:#AEB8CC;}
+  .topbar .left b{color:#7FA0FF;}
+  .topbar .right{position:relative; z-index:1; display:flex; align-items:center; gap:14px; font-size:12.5px; color:#C7CEDD;}
+  .topbar .right a{text-decoration:none; color:#C7CEDD;}
+  .topbar .right a:hover{color:#fff;}
+  .avatar{width:28px; height:28px; border-radius:50%; background:var(--blue); color:#fff; display:flex; align-items:center;
+    justify-content:center; font-size:11px; font-weight:700; flex:0 0 auto;}
+  @media (max-width:560px){ .topbar .right .nm, .topbar .left .sub{display:none;} }
+
+  .shell{display:flex; min-height:calc(100vh - 58px - 34px);}
+  .sidebar{width:220px; flex:0 0 auto; background:var(--panel); border-right:1px solid var(--line); padding:14px 0;}
+  .sidebar a{display:flex; align-items:center; gap:11px; padding:10px 18px; font-size:13.5px; font-weight:500;
+    color:var(--ink-soft); text-decoration:none; border-left:3px solid transparent;}
+  .sidebar a svg{flex:0 0 auto;}
+  .sidebar a.active{color:var(--blue-dim); background:var(--card); border-left-color:var(--blue); font-weight:600;}
+  .sidebar a:hover{color:var(--ink);}
+  .sidebar .divider{height:1px; background:var(--line); margin:10px 18px;}
+
+  .mnav{display:none; overflow-x:auto; gap:6px; padding:10px 14px; background:var(--panel); border-bottom:1px solid var(--line);}
+  .mnav a{flex:0 0 auto; font-size:12.5px; font-weight:600; text-decoration:none; color:var(--ink-soft);
+    border:1px solid var(--line); padding:7px 12px; background:var(--stone);}
+  .mnav a.active{background:#0E1B2E; color:#fff; border-color:#0E1B2E;}
+
+  .main{flex:1; padding:26px 30px 60px; min-width:0;}
+  .main-head{display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; margin-bottom:6px;}
+  .main-head h1{font-size:26px;}
+  .lead{font-size:12.5px; color:var(--ink-soft); margin:2px 0 16px; max-width:70ch;}
+  .btn{font-size:13px; font-weight:600; padding:9px 16px; border:1px solid var(--line); background:var(--panel);
+    color:var(--ink); cursor:pointer; text-decoration:none; display:inline-block; font-family:inherit;}
+  .btn.primary{background:var(--blue); color:#fff; border-color:var(--blue);}
+  .btn[disabled]{opacity:.45; cursor:not-allowed;}
+  .subtabs{display:flex; gap:18px; font-size:13px; color:var(--ink-soft); margin:14px 0 18px; border-bottom:1px solid var(--line); padding-bottom:10px; flex-wrap:wrap;}
+  .subtabs span{cursor:pointer;}
+  .subtabs span.active{color:var(--ink); font-weight:600;}
+
+  .stats{display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin:14px 0 24px;}
+  .stat{background:var(--panel); border:1px solid var(--line); padding:16px 18px;}
+  .stat .n{font-family:'Barlow Condensed'; font-size:28px; font-weight:700; color:var(--blue);}
+  .stat .l{font-size:12px; color:var(--ink-soft); margin-top:2px;}
+  @media (max-width:760px){ .stats{grid-template-columns:1fr 1fr;} }
+
+  table{width:100%; border-collapse:collapse; background:var(--panel); border:1px solid var(--line); font-size:13px;}
+  thead th{text-align:left; font-size:11px; text-transform:uppercase; letter-spacing:.03em; color:var(--ink-soft);
+    padding:11px 14px; border-bottom:1px solid var(--line); background:var(--card);}
+  tbody td{padding:13px 14px; border-bottom:1px solid var(--line); vertical-align:middle;}
+  tbody tr:last-child td{border-bottom:none;}
+  tbody tr:hover{background:var(--card);}
+  .ttl{font-weight:600; color:var(--ink);}
+  .ttl .row-actions{display:none; font-size:12px; margin-top:4px; font-weight:500;}
+  .ttl .row-actions a{color:var(--blue-dim); text-decoration:none; margin-right:10px;}
+  tbody tr:hover .row-actions{display:block;}
+  .soft{color:var(--ink-soft); font-size:12.5px;}
+  .badge{font-size:10.5px; font-weight:700; letter-spacing:.03em; padding:4px 9px; text-transform:uppercase; display:inline-block; white-space:nowrap;}
+  .badge.free,.badge.ok{background:var(--free-bg); color:var(--free);}
+  .badge.paid,.badge.warn{background:var(--paid-bg); color:var(--paid);}
+  .badge.info{background:var(--info-bg); color:var(--blue-dim);}
+  .badge.mute{background:var(--card); color:var(--ink-soft);}
+
+  .box{border:1px solid var(--line); background:var(--panel); margin-bottom:18px;}
+  .box .box-head{font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:.03em; color:var(--ink-soft);
+    padding:11px 15px; border-bottom:1px solid var(--line); background:var(--card);}
+  .box .box-body{padding:16px;}
+  .layout{display:grid; grid-template-columns:1fr 300px; gap:22px; align-items:start;}
+  .cols2{display:grid; grid-template-columns:1fr 1fr; gap:22px; align-items:start;}
+  @media (max-width:900px){ .layout, .cols2{grid-template-columns:1fr;} }
+
+  .f{margin-bottom:16px;}
+  .f label{display:block; font-size:12.5px; font-weight:600; color:var(--ink-soft); margin-bottom:6px;}
+  .f input[type=text], .f input[type=number], .f input[type=email], .f select, .f textarea{
+    width:100%; border:1px solid var(--line); background:var(--panel); padding:0 12px; height:40px; font-size:13.5px; color:var(--ink); font-family:inherit;}
+  .f textarea{height:92px; padding:10px 12px; resize:vertical;}
+  .f input::placeholder, .f textarea::placeholder{color:#A9B2C0;}
+  .f .hint{font-size:11.5px; color:var(--ink-soft); margin-top:5px;}
+  .f .count{font-size:11.5px; color:var(--ink-soft); text-align:right; margin-top:4px;}
+  .f .count.over{color:#C0392B; font-weight:600;}
+  .title-input{width:100%; font-family:'Barlow Condensed'; font-size:30px; font-weight:700; color:var(--ink);
+    border:1px solid var(--line); background:var(--panel); padding:12px 16px; margin-bottom:16px;}
+  .check{display:flex; align-items:flex-start; gap:9px; font-size:13px; padding:6px 0; cursor:pointer; color:var(--ink);}
+  .check input{margin-top:3px;}
+  .check .d{display:block; font-size:12px; color:var(--ink-soft); margin-top:1px;}
+  .pub-row{display:flex; justify-content:space-between; font-size:13px; padding:7px 0; border-bottom:1px dashed var(--line);}
+  .pub-row .v{color:var(--ink-soft);}
+  .pub-actions{display:flex; justify-content:space-between; align-items:center; margin-top:14px; gap:8px; flex-wrap:wrap;}
+  .block-ph{border:1px dashed var(--line); background:var(--panel); padding:16px; margin-bottom:12px;}
+  .block-ph .bl{font-size:10.5px; letter-spacing:.04em; text-transform:uppercase; color:var(--ink-soft); margin-bottom:8px; font-weight:600;}
+  .ln{height:10px; background:var(--card); border-radius:2px; margin-bottom:9px;}
+  .img-ph{aspect-ratio:16/10; background:repeating-linear-gradient(135deg,var(--card),var(--card) 9px,var(--line) 9px,var(--line) 18px);
+    border:1px solid var(--line); display:flex; align-items:center; justify-content:center; font-size:11.5px; color:var(--ink-soft); margin-bottom:10px;}
+  .link-like{font-size:12.5px; color:var(--blue-dim); cursor:pointer;}
+
+  .toggle{display:flex; justify-content:space-between; align-items:center; gap:14px; padding:12px 0; border-bottom:1px solid var(--line);}
+  .toggle:last-child{border-bottom:none;}
+  .toggle .t{font-size:13.5px; font-weight:600;}
+  .toggle .d{font-size:12px; color:var(--ink-soft); margin-top:2px; max-width:48ch;}
+  .toggle input{width:40px; height:22px; accent-color:var(--blue); flex:0 0 auto;}
+
+  .empty{border:1px dashed var(--line); background:var(--panel); padding:40px 24px; text-align:center;}
+  .empty h3{font-size:16px; margin:0 0 6px;} .empty p{font-size:13px; color:var(--ink-soft); margin:0 0 16px;}
+
+  .feed{list-style:none; margin:0; padding:0;}
+  .feed li{display:flex; gap:12px; padding:11px 0; border-bottom:1px solid var(--line); font-size:13px;}
+  .feed li:last-child{border-bottom:none;}
+  .feed .dot{width:8px; height:8px; border-radius:50%; background:var(--blue); margin-top:6px; flex:0 0 auto;}
+  .feed .when{font-size:11.5px; color:var(--ink-soft);}
+
+  .comment{border:1px solid var(--line); background:var(--panel); padding:16px 18px; margin-bottom:12px;}
+  .comment .who{font-weight:600; font-size:13.5px;} .comment .on{font-size:12px; color:var(--ink-soft); margin:2px 0 10px;}
+  .comment p{margin:0 0 12px; font-size:13.5px;}
+  .comment .acts{display:flex; gap:14px; font-size:12.5px;} .comment .acts a{color:var(--blue-dim); text-decoration:none; font-weight:600;}
+
+  footer.adminf{height:34px; display:flex; align-items:center; justify-content:center; font-size:11.5px; color:var(--ink-soft);
+    border-top:1px solid var(--line); background:var(--panel);}
+
+  @media (max-width:820px){
+    .sidebar{display:none;} .mnav{display:flex;} .main{padding:20px 16px 50px;}
+    table{display:block; overflow-x:auto; white-space:nowrap;}
+  }
+</style>
+</head>
+<body>
+
+<div class="note-bar" id="noteBar"><span>Datos de muestra para la demo — no son información real del cliente. Maqueta no funcional.</span><button onclick="document.getElementById('noteBar').style.display='none'" aria-label="Cerrar aviso">×</button></div>
+
+<div class="topbar">
+  <div class="left"><svg width="30" height="23" viewBox="0 0 26 20" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex:0 0 auto;"><path d="M1 18 L8 6 L12 12 L15 8 L19 14" stroke="#7FA0FF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/><path d="M15 18 L19 11 L24 18" stroke="#7FA0FF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg><span class="brand-txt">G&amp;<b>S</b></span><span class="sub">· Panel de administración</span></div>
+  <div class="right"><a href="index.html">Ver sitio</a><a href="admin-login.html">Cerrar sesión</a><div class="avatar">ML</div><span class="nm">María Loza García</span></div>
+</div>
+
+  <div class="mnav"><a href="admin-escritorio.html">Escritorio</a><a href="admin.html">Entradas (Blog)</a><a href="admin-paginas.html">Páginas</a><a href="admin-consultorias.html">Consultorías</a><a href="admin-proyectos.html">Proyectos</a><a href="admin-comentarios.html" class="active">Comentarios</a><a href="admin-suscripciones.html">Suscripciones</a><a href="admin-usuarios.html">Usuarios</a><a href="admin-ajustes.html">Ajustes</a></div>
+<div class="shell">
+  <nav class="sidebar">
+    <a href="admin-escritorio.html"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-8 9 8v10a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg> Escritorio</a>
+    <a href="admin.html"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg> Entradas (Blog)</a>
+    <a href="admin-paginas.html"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg> Páginas</a>
+    <a href="admin-consultorias.html"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg> Consultorías</a>
+    <a href="admin-proyectos.html"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg> Proyectos</a>
+    <div class="divider"></div>
+    <a href="admin-comentarios.html" class="active"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg> Comentarios</a>
+    <a href="admin-suscripciones.html"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg> Suscripciones</a>
+    <a href="admin-usuarios.html"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg> Usuarios</a>
+    <a href="admin-ajustes.html"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="21" x2="4" y2="14"/><line x1="4" y1="10" x2="4" y2="3"/><line x1="12" y1="21" x2="12" y2="12"/><line x1="12" y1="8" x2="12" y2="3"/><line x1="20" y1="21" x2="20" y2="16"/><line x1="20" y1="12" x2="20" y2="3"/><line x1="1" y1="14" x2="7" y2="14"/><line x1="9" y1="8" x2="15" y2="8"/><line x1="17" y1="16" x2="23" y2="16"/></svg> Ajustes</a>
+  </nav>
+  <main class="main">
+    <div class="main-head"><h1>Comentarios</h1></div>    <div class="subtabs"><span class="active">Pendientes (2)</span><span>Aprobados (0)</span><span>Spam (0)</span></div>
+<div class="comment"><div class="who">Lector de muestra 1</div><div class="on">en «Buenas prácticas para modelos estructurales en Leapfrog»</div><p>Comentario de muestra — pregunta sobre los criterios de auditoría del modelo.</p><div class="acts"><a href="#">Aprobar</a><a href="#">Responder</a><a href="#">Spam</a><a href="#">Eliminar</a></div></div><div class="comment"><div class="who">Lector de muestra 2</div><div class="on">en «RQD y Televiewer: qué dice cada uno que el otro no dice»</div><p>Comentario de muestra — agradecimiento y consulta sobre un caso de campo.</p><div class="acts"><a href="#">Aprobar</a><a href="#">Responder</a><a href="#">Spam</a><a href="#">Eliminar</a></div></div>
+  </main>
+</div>
+
+<footer class="adminf">Maqueta de panel de administración — G&amp;S Geociencia y Servicios Especializados</footer>
+</body>
+</html>

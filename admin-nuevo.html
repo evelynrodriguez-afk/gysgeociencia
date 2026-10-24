@@ -92,6 +92,12 @@
   .link-like{font-size:12.5px; color:var(--blue-dim); cursor:pointer;}
 
   textarea.excerpt{width:100%; border:1px solid var(--line); background:var(--card); min-height:70px; padding:10px; font-size:13px; color:var(--ink-soft); font-family:inherit;}
+  .topbar{position:relative; overflow:hidden;}
+  .topbar::before{content:''; position:absolute; top:-70px; left:60px; width:260px; height:260px;
+    background:radial-gradient(circle, rgba(127,160,255,.35), transparent 65%); filter:blur(40px); pointer-events:none;}
+  .topbar .left{position:relative; z-index:1; font-size:16px;}
+  .topbar .left .brand-txt{display:inline-block;}
+  .topbar .left b{color:#7FA0FF;}
 </style>
 </head>
 <body>
@@ -102,7 +108,13 @@
 </div>
 
 <div class="topbar">
-  <div class="left">⛰️ G&amp;<b>S</b> · Panel de administración</div>
+  <div class="left">
+    <svg width="26" height="20" viewBox="0 0 26 20" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex:0 0 auto;">
+      <path d="M1 18 L8 6 L12 12 L15 8 L19 14" stroke="#7FA0FF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      <path d="M15 18 L19 11 L24 18" stroke="#7FA0FF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+    </svg>
+    <span class="brand-txt">G&amp;<b>S</b></span> · Panel de administración
+  </div>
   <div class="right">
     <span>👁 Ver sitio</span>
     <div class="avatar">ML</div>

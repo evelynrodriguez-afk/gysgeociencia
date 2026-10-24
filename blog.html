@@ -47,8 +47,9 @@
   }
   header.nav .navrow{display:flex; align-items:center; justify-content:space-between; gap:16px; max-width:1120px; margin:0 auto; padding:0 28px;}
   @media (max-width:640px){ header.nav .navrow{padding:0 18px;} }
-  .brand{display:flex; align-items:center; gap:9px; font-family:'Barlow Condensed'; font-weight:700; font-size:21px; color:var(--ink); white-space:nowrap;}
+  .brand{display:flex; align-items:center; gap:10px; font-family:'Barlow Condensed'; font-weight:700; font-size:27px; color:var(--ink); white-space:nowrap;}
   .brand b{color:var(--blue);}
+  .brand .brand-txt{display:inline-block;}
   nav.links{display:flex; gap:22px; font-size:14.5px; font-weight:600; color:var(--ink);}
   nav.links a{color:inherit; text-decoration:none; padding-bottom:3px; border-bottom:2px solid transparent;}
   nav.links a:hover{color:var(--blue); border-bottom-color:var(--blue);}
@@ -116,7 +117,11 @@
   .proj p{font-size:13.5px; color:var(--ink-soft); margin:8px 0 0;}
   @media (max-width:700px){ .proj{grid-template-columns:1fr;} }
 
-  .cta-band{background:var(--graphite); color:var(--stone);}
+  .cta-band{background:var(--graphite); color:var(--stone); position:relative; overflow:hidden;}
+  .cta-band::before{content:''; position:absolute; top:-100px; right:-60px; width:380px; height:380px;
+    background:radial-gradient(circle, rgba(47,95,235,.30), transparent 65%); filter:blur(50px);
+    pointer-events:none; z-index:0;}
+  .cta-band .wrap{position:relative; z-index:1;}
   .cta-band .wrap{display:flex; justify-content:space-between; align-items:center; gap:30px; flex-wrap:wrap;}
   .cta-band h2{color:var(--stone); font-size:30px; max-width:20ch;}
   .cta-band p{color:#AEB8CC; font-size:14px; max-width:40ch; margin:10px 0 0;}
@@ -125,6 +130,11 @@
   footer{background:var(--graphite); color:#AEB8CC; padding:44px 0 calc(34px + env(safe-area-inset-bottom,0px));}
   footer .wrap{display:grid; grid-template-columns:1.3fr 1fr 1fr; gap:30px; font-size:13.5px;}
   footer .brand{color:#fff;}
+  footer{position:relative; overflow:hidden;}
+  footer::before{content:''; position:absolute; top:-120px; left:-80px; width:420px; height:420px;
+    background:radial-gradient(circle, rgba(47,95,235,.30), transparent 65%); filter:blur(50px);
+    pointer-events:none; z-index:0;}
+  footer .wrap, footer .legal{position:relative; z-index:1;}
   footer h4{font-family:'Inter'; font-size:12.5px; font-weight:600; color:#fff; margin:0 0 12px;}
   footer a, footer p{color:#AEB8CC; text-decoration:none; display:block; margin:0 0 8px;}
   footer a:hover{color:var(--blue);}
@@ -278,11 +288,11 @@
 <header class="nav">
   <div class="navrow">
     <a class="brand" href="index.html" style="text-decoration:none;">
-      <svg width="30" height="22" viewBox="0 0 26 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <svg width="40" height="30" viewBox="0 0 26 20" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M1 18 L8 6 L12 12 L15 8 L19 14" stroke="var(--blue)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
         <path d="M15 18 L19 11 L24 18" stroke="var(--blue)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
       </svg>
-      G&amp;<b>S</b>
+      <span class="brand-txt">G&amp;<b>S</b></span>
     </a>
     <nav class="links">
       <a href="nosotros.html">Nosotros</a>
@@ -420,11 +430,11 @@
   <div class="wrap">
     <div>
       <a class="brand" href="index.html" style="margin-bottom:12px; text-decoration:none;">
-        <svg width="26" height="20" viewBox="0 0 26 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg width="34" height="26" viewBox="0 0 26 20" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M1 18 L8 6 L12 12 L15 8 L19 14" stroke="var(--blue)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
           <path d="M15 18 L19 11 L24 18" stroke="var(--blue)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
         </svg>
-        G&amp;<b>S</b>
+        <span class="brand-txt">G&amp;<b>S</b></span>
       </a>
       <p style="max-width:34ch;">Consultora geocientífica para minería, geotecnia y exploración petrolera.</p>
     </div>
