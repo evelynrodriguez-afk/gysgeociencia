@@ -28,6 +28,8 @@
     --free:#6FD394; --free-bg:#113321; --paid:#F0B35B; --paid-bg:#3A2A0F; --info-bg:#1C2A4A;
   }
   *{box-sizing:border-box;}
+  .photo-preview{margin-top:8px;min-height:70px;display:flex;align-items:center;gap:12px;color:var(--ink-soft);font-size:12px;}
+  .photo-preview img{width:112px;height:84px;object-fit:cover;border:1px solid var(--line);border-radius:4px;}
   body{margin:0; background:var(--stone); color:var(--ink); font-family:'Inter',system-ui,-apple-system,Arial,sans-serif;
     font-size:14px; padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);}
   h1,h2{font-family:'Barlow Condensed',Arial,sans-serif; font-weight:700; margin:0;}
@@ -230,10 +232,10 @@
             <div class="f"><label for="directionTag">Descripción de sección</label><textarea id="directionTag" rows="2"></textarea></div>
             <div class="f"><label for="team0Name">Persona 1 — nombre</label><input id="team0Name" type="text"></div>
             <div class="f"><label for="team0Role">Persona 1 — cargo</label><input id="team0Role" type="text"></div>
-            <div class="f"><label for="team0Photo">Persona 1 — texto temporal de fotografía</label><input id="team0Photo" type="text"></div>
+            <div class="f"><label for="team0PhotoFile">Persona 1 — subir fotografía</label><input id="team0PhotoFile" type="file" accept="image/jpeg,image/png,image/webp"><div id="team0PhotoPreview" class="photo-preview">Sin fotografía seleccionada</div><label for="team0Photo">Texto alternativo / respaldo</label><input id="team0Photo" type="text"></div>
             <div class="f"><label for="team1Name">Persona 2 — nombre</label><input id="team1Name" type="text"></div>
             <div class="f"><label for="team1Role">Persona 2 — cargo</label><input id="team1Role" type="text"></div>
-            <div class="f"><label for="team1Photo">Persona 2 — texto temporal de fotografía</label><input id="team1Photo" type="text"></div>
+            <div class="f"><label for="team1PhotoFile">Persona 2 — subir fotografía</label><input id="team1PhotoFile" type="file" accept="image/jpeg,image/png,image/webp"><div id="team1PhotoPreview" class="photo-preview">Sin fotografía seleccionada</div><label for="team1Photo">Texto alternativo / respaldo</label><input id="team1Photo" type="text"></div>
           </div>
         </div>
         <div class="box">
@@ -247,16 +249,15 @@
       </div>
       <div>
         <div class="box">
-          <div class="box-head">Guardar y publicar</div>
+          <div class="box-head">Publicación</div>
           <div class="box-body">
-            <div class="pub-row"><span>Archivo de contenido</span><span class="v">data/nosotros.json</span></div>
-            <div class="pub-row"><span>Modo actual</span><span class="v">GitHub manual</span></div>
-            <p class="help">El borrador se guarda en este navegador. Para compartirlo con otros administradores o publicarlo en la web, descarga el JSON y súbelo al repositorio en la ruta indicada.</p>
+            <p class="help">Revisa los cambios antes de publicarlos en el sitio web.</p>
             <div class="pub-actions" style="flex-direction:column;">
-              <button type="button" class="btn" id="previewBtn">Actualizar vista previa</button>
-              <button type="button" class="btn" id="draftBtn">Guardar borrador local</button>
-              <button type="button" class="btn primary" id="downloadBtn">Descargar para publicar</button>
+              <button type="button" class="btn" id="previewBtn">Vista previa</button>
+              <button type="button" class="btn" id="draftBtn">Guardar borrador</button>
+              <button type="button" class="btn primary" id="publishBtn">Publicar cambios</button>
             </div>
+            <p class="help" id="publishHelp" role="status" aria-live="polite">La publicación estará disponible cuando se conecte el servicio seguro de publicación.</p>
           </div>
         </div>
         <div class="box">
@@ -277,25 +278,13 @@
             <h3>Valores</h3><p id="previewValues"></p>
           </div>
         </div>
-        <div class="box">
-          <div class="box-head">Cómo publicar en GitHub</div>
-          <div class="box-body">
-            <ol class="help-list">
-              <li>Descarga el archivo JSON con el botón superior.</li>
-              <li>Entra al repositorio de GitHub y abre la carpeta <code>data</code>.</li>
-              <li>Reemplaza <code>nosotros.json</code> por el archivo descargado.</li>
-              <li>Confirma el cambio (commit) y espera la actualización de GitHub Pages.</li>
-              <li>Abre <code>nosotros.html</code> y verifica los cambios publicados.</li>
-            </ol>
-            <p class="help"><strong>Importante:</strong> esta primera versión no publica directamente desde el panel ni implementa permisos multiusuario reales. No ingreses contraseñas ni tokens en esta página.</p>
-          </div>
-        </div>
+
       </div>
     </div>
   </main>
 </div>
 
-<footer class="adminf">Maqueta de panel de administración — G&amp;S Geociencia y Servicios Especializados</footer>
+<footer class="adminf">Administración de contenidos — G&amp;S Geociencia</footer>
 <script>
 (function(){
   const dataUrl = 'data/nosotros.json';
@@ -318,6 +307,7 @@
       $('team'+i+'Name').value=person.name||'';
       $('team'+i+'Role').value=person.role||'';
       $('team'+i+'Photo').value=person.photoPlaceholder||'Foto [PENDIENTE]';
+      renderTeamPhotoPreview(i, person.photoData || '');
     }
     updateCounts(); renderPreview();
   }
@@ -326,8 +316,24 @@
     scalarFields.forEach(k=>{if($(k)) d[k]=$(k).value.trim();});
     d.fieldItems=$('fieldItems').value.split('\n').map(x=>x.trim()).filter(Boolean);
     d.chips=$('chips').value.split('\n').map(x=>x.trim()).filter(Boolean);
-    d.team=[0,1].map(i=>({name:$('team'+i+'Name').value.trim(),role:$('team'+i+'Role').value.trim(),photoPlaceholder:$('team'+i+'Photo').value.trim()}));
+    d.team=[0,1].map(i=>({name:$('team'+i+'Name').value.trim(),role:$('team'+i+'Role').value.trim(),photoPlaceholder:$('team'+i+'Photo').value.trim(),photoData:(current.team && current.team[i] && current.team[i].photoData) || ''}));
     return d;
+  }
+  function renderTeamPhotoPreview(i, data){
+    const box=$('team'+i+'PhotoPreview');
+    if(!box) return;
+    box.replaceChildren();
+    if(data){ const img=document.createElement('img'); img.src=data; img.alt='Vista previa de fotografía de persona '+(i+1); box.appendChild(img); const label=document.createElement('span'); label.textContent='Fotografía cargada'; box.appendChild(label); }
+    else box.textContent='Sin fotografía seleccionada';
+  }
+  function handleTeamPhotoUpload(i, file){
+    if(!file) return;
+    if(!['image/jpeg','image/png','image/webp'].includes(file.type)){status('Formato no admitido. Usa JPG, PNG o WebP.','error');return;}
+    if(file.size>2*1024*1024){status('La imagen supera 2 MB. Reduce su tamaño antes de subirla.','error');return;}
+    const reader=new FileReader();
+    reader.onload=()=>{ current.team=current.team||[{},{}]; current.team[i]=current.team[i]||{}; current.team[i].photoData=String(reader.result); renderTeamPhotoPreview(i,current.team[i].photoData); status('Fotografía cargada en el borrador. Descarga el JSON para incluirla en la publicación.','success'); };
+    reader.onerror=()=>status('No se pudo leer la fotografía seleccionada.','error');
+    reader.readAsDataURL(file);
   }
   function renderPreview(){
     const d=collect();
@@ -356,19 +362,56 @@
     status('Contenido cargado. Los cambios aún no están publicados.','');
   }
   scalarFields.concat(['fieldItems','chips','team0Name','team0Role','team0Photo','team1Name','team1Role','team1Photo']).forEach(id=>$(id).addEventListener('input',()=>{renderPreview();updateCounts();}));
+  [0,1].forEach(i=>$('team'+i+'PhotoFile').addEventListener('change',e=>handleTeamPhotoUpload(i,e.target.files && e.target.files[0])));
   $('previewBtn').addEventListener('click',()=>{renderPreview();status('Vista previa actualizada.','success');});
   $('draftBtn').addEventListener('click',()=>{
     const d=collect();
     try{localStorage.setItem(draftKey,JSON.stringify(d));status('Borrador guardado en este navegador. No está publicado ni compartido con otros usuarios.','success');}
     catch(e){status('No se pudo guardar el borrador local. Descarga el JSON para conservar los cambios.','error');}
   });
-  $('downloadBtn').addEventListener('click',()=>{
+  $('publishBtn').addEventListener('click', async ()=>{
     const d=collect();
-    if(!d.heading||!d.lede){status('Completa al menos el título principal y la bajada antes de exportar.','error');return;}
-    const blob=new Blob([JSON.stringify(d,null,2)+'\n'],{type:'application/json;charset=utf-8'});
-    const url=URL.createObjectURL(blob); const a=document.createElement('a'); a.href=url; a.download='nosotros.json'; document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
-    try{localStorage.setItem(draftKey,JSON.stringify(d));}catch(e){}
-    status('Archivo nosotros.json descargado. Súbelo a la carpeta data del repositorio GitHub para publicar los cambios.','success');
+    if(!d.heading || !d.lede){
+      status('Completa el título principal y la bajada antes de publicar.','error');
+      return;
+    }
+    const help=$('publishHelp');
+    const btn=$('publishBtn');
+    btn.disabled=true;
+    btn.textContent='Publicando…';
+    try{
+      const configResponse=await fetch('data/cms-config.json',{cache:'no-store'});
+      if(!configResponse.ok) throw new Error('CONFIG_NOT_AVAILABLE');
+      const config=await configResponse.json();
+      if(!config.publishEndpoint) throw new Error('PUBLISH_NOT_CONFIGURED');
+      const response=await fetch(config.publishEndpoint,{
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        credentials:'include',
+        body:JSON.stringify({contentType:'nosotros',content:d})
+      });
+      if(!response.ok) {
+        if(response.status===401 || response.status===403) throw new Error('NO_PERMISSION');
+        throw new Error('PUBLISH_FAILED');
+      }
+      try{localStorage.removeItem(draftKey);}catch(e){}
+      status('Los cambios se publicaron correctamente.','success');
+      help.textContent='Los cambios se publicaron correctamente.';
+    }catch(e){
+      if(e.message==='CONFIG_NOT_AVAILABLE' || e.message==='PUBLISH_NOT_CONFIGURED'){
+        status('La publicación automática aún no está habilitada. Contacta al responsable de la plataforma.','error');
+        help.textContent='La publicación automática aún no está habilitada.';
+      } else if(e.message==='NO_PERMISSION'){
+        status('Tu usuario no tiene permiso para publicar estos cambios.','error');
+        help.textContent='No tienes permisos para publicar estos cambios.';
+      } else {
+        status('No se pudo publicar. Inténtalo nuevamente o contacta al administrador.','error');
+        help.textContent='No se pudo publicar. Inténtalo nuevamente.';
+      }
+    } finally {
+      btn.disabled=false;
+      btn.textContent='Publicar cambios';
+    }
   });
   load();
 })();
